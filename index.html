@@ -343,9 +343,9 @@
         </div>
         <p class="typewriter-slogan">"Printing your hopes since forever."</p>
         <div class="cta-buttons">
-            <a href="#" class="cta-button">BUY DEBT</a>
+            <a href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=AJZrqYqofzkmQqUTXnP1uTtcospWWpxYwtV3NYrSBray" target="_blank" class="cta-button">BUY DEBT</a>
             <a href="https://x.com/dbtinfinite" target="_blank" class="cta-button">JOIN COMMUNITY</a>
-            <a href="#" class="cta-button">SEE CHART</a>
+            <a href="https://www.dextools.io/app/en/solana/pair-explorer/AJZrqYqofzkmQqUTXnP1uTtcospWWpxYwtV3NYrSBray?utm_source=telegram&utm_medium=app_link" target="_blank" class="cta-button">SEE CHART</a>
             <a href="https://drive.google.com/file/d/1fCzH7CsUxCkRszvXBGNyqRmofnx2AXm3/view?usp=sharing" target="_blank" class="cta-button">WHITEPAPER</a>
         </div>
     </header>
@@ -430,20 +430,33 @@
             <p>&copy; 2025 DEBT Coin. All rights reserved (to debt). Purely satirical project.</p>
             <p>
                 <a href="https://drive.google.com/file/d/1fCzH7CsUxCkRszvXBGNyqRmofnx2AXm3/view?usp=sharing" target="_blank">Satirical Whitepaper</a> |
-                <a href="https://x.com/dbtinfinite" target="_blank">X (Twitter)</a>
+                <a href="https://x.com/dbtinfinite" target="_blank">X (Twitter)</a> |
+                <span>Contract: <a href="https://solscan.io/token/AJZrqYqofzkmQqUTXnP1uTtcospWWpxYwtV3NYrSBray" target="_blank">AJZrqYqofzkmQqUTXnP1uTtcospWWpxYwtV3NYrSBray</a></span>
             </p>
         </div>
     </footer>
 
     <script>
-        // Script for the simulated debt counter with random growth
         const debtCounter = document.getElementById('debt-counter');
-        let currentDebt = 36000000000000; // Starting large value
         const updateIntervalMs = 50; // Update every 50 milliseconds
 
         // Define a range for random growth per update (e.g., between $50,000 and $2,000,000)
         const minGrowthPerUpdate = 50000;
         const maxGrowthPerUpdate = 2000000;
+
+        // Chiave per localStorage
+        const localStorageKey = 'debtCoinCurrentDebt';
+
+        // Valore iniziale di partenza (se non c'è nulla in localStorage)
+        const initialStartingDebt = 36000000000000;
+
+        // Prova a caricare il debito da localStorage
+        let currentDebt = parseFloat(localStorage.getItem(localStorageKey));
+
+        // Se non c'è nulla o il valore non è un numero valido, usa il valore iniziale
+        if (isNaN(currentDebt)) {
+            currentDebt = initialStartingDebt;
+        }
 
         function formatDebt(num) {
             return '$' + Math.floor(num).toLocaleString('en-US');
@@ -454,7 +467,13 @@
             const randomGrowth = Math.random() * (maxGrowthPerUpdate - minGrowthPerUpdate) + minGrowthPerUpdate;
             currentDebt += randomGrowth;
             debtCounter.textContent = formatDebt(currentDebt);
+
+            // Salva lo stato corrente in localStorage
+            localStorage.setItem(localStorageKey, currentDebt.toString());
         }
+
+        // Aggiorna il contatore immediatamente all'avvio per mostrare il valore caricato
+        updateDebtCounter(); // Chiamata iniziale per mostrare subito il valore
 
         setInterval(updateDebtCounter, updateIntervalMs);
 
