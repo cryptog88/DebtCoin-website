@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEBT Coin – The Infinite Debt Spiral</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --light-bg: #f0f0f0; /* Off-white for main background */
+            --text-color: #333333; /* Dark grey for main text */
+            --accent-color: #FF4136; /* Red for emphasis/debt clock */
+            --glitch-color: #008888; /* Dark teal/cyan for secondary glitch/highlight */
+            --border-color: rgba(0, 0, 0, 0.1); /* Light border */
+            --block-bg: rgba(255, 255, 255, 0.6); /* Slightly transparent white for text blocks */
+
+            --button-blue: #1F4F8F; /* Dark blue from logo */
+            --button-text-light: #f0f0f0; /* Light text for buttons */
+
+            --font-mono: 'Roboto Mono', monospace;
+            --font-display: 'Orbitron', sans-serif;
+            --font-typewriter: 'VT323', monospace; /* Nuovo font per macchina da scrivere */
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            padding: 60px 20px 30px; /* Adjusted padding */
+            position: relative;
+            overflow: hidden;
+            background-color: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px; /* Space between logo/title and slogan */
+        }
+
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+        }
+
+        .header-title {
+            font-family: var(--font-display);
+            font-size: 3.5em;
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(255, 65, 54, 0.2), 0 0 16px rgba(0, 136, 136, 0.1);
+            position: relative;
+            display: inline-block;
+            animation: glitch-text 0.8s infinite alternate;
+        }
+        .header-title span {
+            color: var(--text-color);
+        }
+
+        @keyframes glitch-text {
+            0% { transform: translate(0); text-shadow: 0 0 8px rgba(255, 65, 54, 0.2), 0 0 16px rgba(0, 136, 136, 0.1); }
+            20% { transform: translate(-1px, 1px); text-shadow: 0 0 7px rgba(255, 65, 54, 0.2), 0 0 15px rgba(0, 136, 136, 0.1); }
+            40% { transform: translate(1px, -1px); text-shadow: 0 0 9px rgba(255, 65, 54, 0.2), 0 0 17px rgba(0, 136, 136, 0.1); }
+            60% { transform: translate(-0.5px, 0.5px); text-shadow: 0 0 7.5px rgba(255, 65, 54, 0.2), 0 0 15.5px rgba(0, 136, 136, 0.1); }
+            80% { transform: translate(0.5px, -0.5px); text-shadow: 0 0 8.5px rgba(255, 65, 54, 0.2), 0 0 16px rgba(0, 136, 136, 0.1); }
+            100% { transform: translate(0); text-shadow: 0 0 8px rgba(255, 65, 54, 0.2), 0 0 16px rgba(0, 136, 136, 0.1); }
+        }
+
+        .typewriter-slogan {
+            font-family: var(--font-typewriter); /* Applica il nuovo font */
+            font-size: 1.8em; /* Aumentato per visibilità */
+            color: var(--glitch-color); /* Colore originale o leggermente più scuro per effetto inchiostro */
+            margin-top: 10px; /* Spazio sotto il titolo */
+            margin-bottom: 40px; /* Spazio sopra i bottoni */
+            text-align: center;
+            white-space: nowrap; /* Mantiene il testo su una riga se possibile */
+            overflow: hidden; /* Nasconde il testo che esce (se animato) */
+            border-right: .15em solid var(--glitch-color); /* Mantiene il cursore che lampeggia */
+            animation: blink-caret 0.75s step-end infinite; /* Solo animazione cursore */
+        }
+        @media (max-width: 768px) {
+            .typewriter-slogan {
+                font-size: 1.2em; /* Dimensione ridotta su mobile */
+                white-space: normal; /* Permette il wrap su mobile */
+                border-right: none; /* Rimuove il cursore lampeggiante su mobile */
+                animation: none; /* Rimuove l'animazione cursore su mobile */
+            }
+        }
+
+        /* Animazione cursore - ancora utile se si vuole il cursore */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--glitch-color); }
+        }
+
+
+        /* Nuovo stile per la sezione del contatore, ora separata */
+        .counter-section {
+            background-color: var(--accent-color); /* Red background */
+            color: var(--text-color); /* Dark text on red */
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--glitch-color);
+        }
+        .counter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                rgba(0,0,0,0.1),
+                rgba(0,0,0,0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            z-index: 0;
+            animation: move-lines 20s linear infinite;
+        }
+        @keyframes move-lines {
+            from { background-position: 0 0; }
+            to { background-position: 200px 200px; }
+        }
+        .counter-content {
+            position: relative;
+            z-index: 1;
+        }
+        .counter-section h2 {
+            font-family: var(--font-display);
+            font-size: 2.5em;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        #debt-counter {
+            font-family: var(--font-display);
+            font-size: 4.5em;
+            font-weight: bold;
+            letter-spacing: -3px;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: pulse-shadow 1.5s infinite alternate;
+        }
+        @keyframes pulse-shadow {
+            0% { text-shadow: 0 0 10px rgba(0,0,0,0.3); }
+            100% { text-shadow: 0 0 20px rgba(0,0,0,0.6); }
+        }
+        .counter-section p {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto 0px;
+            color: var(--text-color);
+        }
+
+
+        .cta-buttons {
+            margin-top: 30px; /* Spazio sopra i bottoni */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--button-blue);
+            color: var(--button-text-light);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 1.1em;
+            border: 2px solid var(--button-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(31, 79, 143, 0.4);
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--button-blue);
+            border-color: var(--button-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(31, 79, 143, 0.6);
+        }
+
+        section {
+            padding: 60px 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--light-bg);
+        }
+
+        section h2 {
+            font-family: var(--font-display);
+            font-size: 2.5em;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 5px rgba(255, 65, 54, 0.2);
+        }
+
+        .text-block {
+            background-color: var(--block-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--glitch-color);
+            box-shadow: 0 0 15px rgba(0, 136, 136, 0.05);
+        }
+
+        .text-block p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .principle-item {
+            background-color: var(--block-bg);
+            padding: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: center;
+            box-shadow: 0 0 10px rgba(255, 65, 54, 0.05);
+        }
+
+        .principle-item strong {
+            display: block;
+            font-size: 1.4em;
+            color: var(--glitch-color);
+            margin-bottom: 10px;
+        }
+        .principle-item p {
+            font-size: 0.95em;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .main-button {
+            display: inline-block;
+            background-color: var(--button-blue);
+            color: var(--button-text-light);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 1.2em;
+            border: 2px solid var(--button-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(31, 79, 143, 0.4);
+        }
+
+        .main-button:hover {
+            background-color: transparent;
+            color: var(--button-blue);
+            border-color: var(--button-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(31, 79, 143, 0.6);
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: var(--text-color);
+            background-color: var(--block-bg);
+        }
+
+        footer a {
+            color: var(--glitch-color);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.5em;
+            }
+            #debt-counter {
+                font-size: 3em;
+            }
+            section h2 {
+                font-size: 2em;
+            }
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-buttons {
+                flex-direction: column;
+            }
+            .header-logo-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .logo-img {
+                max-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo-container">
+            <img src="Logo.png" alt="DEBT Coin Logo" class="logo-img">
+            <div class="header-title">DEBT<span>Coin</span></div>
+        </div>
+        <p class="typewriter-slogan">"Printing your hopes since forever."</p>
+        <div class="cta-buttons">
+            <a href="#" class="cta-button">BUY DEBT</a>
+            <a href="https://x.com/dbtinfinite" target="_blank" class="cta-button">JOIN COMMUNITY</a>
+            <a href="#" class="cta-button">SEE CHART</a>
+            <a href="https://drive.google.com/file/d/1fCzH7CsUxCkRszvXBGNyqRmofnx2AXm3/view?usp=sharing" target="_blank" class="cta-button">WHITEPAPER</a>
+        </div>
+    </header>
+
+    <section id="debt-counter-display" class="counter-section">
+        <div class="counter-content">
+            <h2>The Infinite Debt Spiral</h2>
+            <div id="debt-counter">0</div>
+            <p>Witness how debt, and with it DebtCoin, grows inexorably, second after second. A constant reminder of the infinite spiral we live in.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="vision">
+            <h2>Vision</h2>
+            <div class="text-block">
+                <p><strong>DebtCoin is not just a token.</strong></p>
+                <p>It's the first memetic and satirical experiment that transforms the concept of <span class="highlight">infinite public debt</span> into a cryptocurrency that grows forever, just like government debt.</p>
+            </div>
+        </section>
+
+        <section id="problem">
+            <h2>The Real Problem It Satirizes</h2>
+            <div class="text-block">
+                <p>Today, global public debt <span class="highlight">exceeds 350% of world GDP</span>. No government has ever truly repaid its debt: they roll it over, expand it, monetize it.</p>
+                <p>It's an infinite vortex that swallows entire generations.</p>
+                <p class="highlight" style="text-align: center; font-size: 1.3em;">Debt doesn't get repaid. It gets rolled over.</p>
+            </div>
+        </section>
+
+        <section id="principles">
+            <h2>Its Core Principles</h2>
+            <div class="principles-grid">
+                <div class="principle-item">
+                    <strong>&#10003; Infinite Supply</strong>
+                    <p>Because public debt always grows.</p>
+                </div>
+                <div class="principle-item">
+                    <strong>&#10003; Mint function without burn</strong>
+                    <p>Like governments: they print without ever burning.</p>
+                </div>
+                <div class="principle-item">
+                    <strong>&#10003; No promise of utility or return</strong>
+                    <p>The same brutal honesty as public debt.</p>
+                </div>
+                <div class="principle-item">
+                    <strong>&#10003; Satirical narrative</strong>
+                    <p>Because reality is already tragic, and irony is the only way to bear it.</p>
+                </div>
+                <div class="principle-item">
+                    <strong>&#10003; Perpetual Growth</strong>
+                    <p>Designed to expand, never to contract.</p>
+                </div>
+                <div class="principle-item">
+                    <strong>&#10003; No Accountability</strong>
+                    <p>Responsibility is a burden for others.</p>
+                </div>
+            </div>
+            <div class="button-group">
+                <a href="https://drive.google.com/file/d/1fCzH7CsUxCkRszvXBGNyqRmofnx2AXm3/view?usp=sharing" target="_blank" class="main-button">READ THE SATIRICAL WHITEPAPER</a>
+            </div>
+        </section>
+
+        <section id="positioning">
+            <h2>Positioning in the Memecoin Market</h2>
+            <div class="text-block">
+                <p>While DOGE satirizes the concept of digital currency, PEPE satirizes internet memes, <span class="highlight">DebtCoin satirizes macroeconomics itself</span>, elevating the meme from pure gambling to political, economic, and cultural satire.</p>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>Concluding Narrative</h2>
+            <div class="text-block">
+                <p><strong>DebtCoin is the only token that tells the truth:</strong></p>
+                <p class="highlight" style="text-align: center; font-size: 1.5em;">Debt doesn't get repaid. It gets rolled over. And it grows. Forever.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DEBT Coin. All rights reserved (to debt). Purely satirical project.</p>
+            <p>
+                <a href="https://drive.google.com/file/d/1fCzH7CsUxCkRszvXBGNyqRmofnx2AXm3/view?usp=sharing" target="_blank">Satirical Whitepaper</a> |
+                <a href="https://x.com/dbtinfinite" target="_blank">X (Twitter)</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Script for the simulated debt counter with random growth
+        const debtCounter = document.getElementById('debt-counter');
+        let currentDebt = 36000000000000; // Starting large value
+        const updateIntervalMs = 50; // Update every 50 milliseconds
+
+        // Define a range for random growth per update (e.g., between $50,000 and $2,000,000)
+        const minGrowthPerUpdate = 50000;
+        const maxGrowthPerUpdate = 2000000;
+
+        function formatDebt(num) {
+            return '$' + Math.floor(num).toLocaleString('en-US');
+        }
+
+        function updateDebtCounter() {
+            // Generate a random growth amount within the defined range
+            const randomGrowth = Math.random() * (maxGrowthPerUpdate - minGrowthPerUpdate) + minGrowthPerUpdate;
+            currentDebt += randomGrowth;
+            debtCounter.textContent = formatDebt(currentDebt);
+        }
+
+        setInterval(updateDebtCounter, updateIntervalMs);
+
+        // Function to animate the logo glitch only when visible
+        const logoTitleContainer = document.querySelector('.header-title');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    logoTitleContainer.style.animationPlayState = 'running';
+                } else {
+                    logoTitleContainer.style.animationPlayState = 'paused';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(logoTitleContainer);
+    </script>
+</body>
+</html>
